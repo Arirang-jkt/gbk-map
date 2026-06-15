@@ -56,9 +56,16 @@ var krlIcon = new L.Icon({
     iconAnchor: [15, 50]
 });
 
+var airportIcon = new L.Icon({
+    iconUrl: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-yellow.png",
+    shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+    iconSize: [30, 50],
+    iconAnchor: [15, 50]
+});
+
 
 // =====================
-// GBK (BTS CONCERT POPUP)
+// GBK POPUP (BTS STYLE)
 // =====================
 L.marker([-6.2186,106.8022])
 .addTo(map)
@@ -142,7 +149,7 @@ mrtStations.forEach(s => {
 
 
 // =====================
-// MRT LINE (BLUE)
+// MRT LINE
 // =====================
 L.polyline([
     [-6.2933,106.7817],
@@ -162,20 +169,16 @@ L.polyline([
     color: "#1e88e5",
     weight: 4,
     opacity: 0.9
-}).addTo(map).bindPopup("MRT Jakarta Line");
+}).addTo(map);
 
 
 // =====================
-// TRANSJAKARTA GBK
+// TRANSPORT MARKERS
 // =====================
 L.marker([-6.2245,106.8030], {icon: tjIcon})
 .addTo(map)
 .bindPopup("<b>TJ Halte GBK</b><br>🚶 ±4–5 min");
 
-
-// =====================
-// KRL + AIRPORT
-// =====================
 L.marker([-6.2076,106.7974], {icon: krlIcon})
 .addTo(map)
 .bindPopup("<b>KRL Palmerah</b>");
@@ -184,13 +187,13 @@ L.marker([-6.1983,106.8213], {icon: krlIcon})
 .addTo(map)
 .bindPopup("<b>KRL Sudirman (Dukuh Atas)</b>");
 
-L.marker([-6.1989,106.8222], {icon: krlIcon})
+L.marker([-6.1989,106.8222], {icon: airportIcon})
 .addTo(map)
 .bindPopup("<b>BNI City Airport Rail Link</b>");
 
 
 // =====================
-// DUKUH ATAS HUB
+// HUB
 // =====================
 L.circle([-6.2039,106.8213], {
     radius: 1000,
@@ -202,43 +205,67 @@ L.circle([-6.2039,106.8213], {
 
 
 // =====================
-// WALKING ROUTES FROM GBK
+// WALKING ROUTES
 // =====================
+L.polyline([[-6.2186,106.8022],[-6.2283,106.8031]],{
+    color:"#424242",weight:4,dashArray:"6,8",opacity:0.9
+}).addTo(map);
 
-// GBK → MRT Senayan
-L.polyline([
-    [-6.2186, 106.8022],
-    [-6.2283, 106.8031]
-], {
-    color: "#424242",
-    weight: 4,
-    dashArray: "6, 8",
-    opacity: 0.9
-}).addTo(map).bindPopup("Walking: GBK → MRT Senayan");
+L.polyline([[-6.2186,106.8022],[-6.2228,106.8075]],{
+    color:"#424242",weight:4,dashArray:"6,8",opacity:0.9
+}).addTo(map);
 
-
-// GBK → MRT Istora
-L.polyline([
-    [-6.2186, 106.8022],
-    [-6.2228, 106.8075]
-], {
-    color: "#424242",
-    weight: 4,
-    dashArray: "6, 8",
-    opacity: 0.9
-}).addTo(map).bindPopup("Walking: GBK → MRT Istora");
+L.polyline([[-6.2186,106.8022],[-6.2245,106.8030]],{
+    color:"#c62828",weight:4,dashArray:"6,8",opacity:0.9
+}).addTo(map);
 
 
-// GBK → TJ Halte GBK
-L.polyline([
-    [-6.2186, 106.8022],
-    [-6.2245, 106.8030]
-], {
-    color: "#c62828",
-    weight: 4,
-    dashArray: "6, 8",
-    opacity: 0.9
-}).addTo(map).bindPopup("Walking: GBK → TransJakarta GBK");
+// =====================
+// LEGEND CLICKABLE
+// =====================
+var legend = L.control({position: "bottomright"});
+
+legend.onAdd = function () {
+
+    var div = L.DomUtil.create("div");
+
+    div.style.background = "white";
+    div.style.padding = "10px 12px";
+    div.style.borderRadius = "10px";
+    div.style.boxShadow = "0 2px 10px rgba(0,0,0,0.2)";
+    div.style.fontSize = "12px";
+    div.style.lineHeight = "18px";
+
+    div.innerHTML = `
+        <b>Legend</b><br><br>
+
+        <div style="cursor:pointer;color:#1e88e5;" id="leg-mrt">● MRT Line</div>
+        <div style="cursor:pointer;color:#424242;" id="leg-walk">- - Walking Route</div>
+        <div style="cursor:pointer;color:red;" id="leg-gbk">● GBK Stadium</div>
+        <div style="cursor:pointer;color:green;" id="leg-krl">● KRL Station</div>
+        <div style="cursor:pointer;color:purple;" id="leg-hub">● Dukuh Atas Hub</div>
+        <div style="cursor:pointer;color:#ffb300;" id="leg-airport">✈ Airport (BNI City)</div>
+    `;
+
+    return div;
+};
+
+legend.addTo(map);
+
+
+// =====================
+// CLICK LEGEND
+// =====================
+document.addEventListener("click", function(e){
+
+    if (e.target.id === "leg-mrt") map.flyTo([-6.2283,106.8031], 15);
+    if (e.target.id === "leg-walk") map.flyTo([-6.2186,106.8022], 15);
+    if (e.target.id === "leg-gbk") map.flyTo([-6.2186,106.8022], 16);
+    if (e.target.id === "leg-krl") map.flyTo([-6.1983,106.8213], 16);
+    if (e.target.id === "leg-hub") map.flyTo([-6.2039,106.8213], 16);
+    if (e.target.id === "leg-airport") map.flyTo([-6.1989,106.8222], 16);
+
+});
 
 </script>
 
