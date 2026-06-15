@@ -11,6 +11,15 @@
     height: 100vh;
     width: 100%;
 }
+
+/* ===================== */
+/* MOBILE FIX            */
+/* ===================== */
+@media (max-width: 600px) {
+    .leaflet-control {
+        transform: scale(0.9);
+    }
+}
 </style>
 </head>
 
@@ -65,7 +74,7 @@ var airportIcon = new L.Icon({
 
 
 // =====================
-// GBK POPUP (BTS STYLE)
+// GBK POPUP
 // =====================
 L.marker([-6.2186,106.8022])
 .addTo(map)
@@ -221,9 +230,9 @@ L.polyline([[-6.2186,106.8022],[-6.2245,106.8030]],{
 
 
 // =====================
-// LEGEND CLICKABLE
+// LEGEND (MOBILE FIXED + CLICKABLE)
 // =====================
-var legend = L.control({position: "bottomright"});
+var legend = L.control({position: "topright"});
 
 legend.onAdd = function () {
 
@@ -233,8 +242,10 @@ legend.onAdd = function () {
     div.style.padding = "10px 12px";
     div.style.borderRadius = "10px";
     div.style.boxShadow = "0 2px 10px rgba(0,0,0,0.2)";
-    div.style.fontSize = "12px";
+    div.style.fontSize = "11px";
     div.style.lineHeight = "18px";
+    div.style.maxWidth = "160px";
+    div.style.zIndex = "1000";
 
     div.innerHTML = `
         <b>Legend</b><br><br>
@@ -254,7 +265,7 @@ legend.addTo(map);
 
 
 // =====================
-// CLICK LEGEND
+// LEGEND CLICK ACTION
 // =====================
 document.addEventListener("click", function(e){
 
