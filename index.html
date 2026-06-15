@@ -271,11 +271,10 @@ var legend = L.control({position: "topright"});
 legend.onAdd = function () {
 
     var div = L.DomUtil.create("div");
-    div.style.fontSize = window.innerWidth < 600 ? "15px" : "11px";
-div.style.lineHeight = window.innerWidth < 600 ? "22px" : "18px";
-div.style.padding = window.innerWidth < 600 ? "14px 16px" : "10px 12px";
-div.style.maxWidth = "260px";
 
+    // =====================
+    // BASE STYLE (DESKTOP)
+    // =====================
     div.style.background = "white";
     div.style.padding = "10px 12px";
     div.style.borderRadius = "10px";
@@ -283,6 +282,17 @@ div.style.maxWidth = "260px";
     div.style.fontSize = "13px";
     div.style.lineHeight = "18px";
     div.style.maxWidth = "220px";
+    div.style.fontFamily = "Arial";
+
+    // =====================
+    // MOBILE OVERRIDE
+    // =====================
+    if (window.innerWidth < 600) {
+        div.style.fontSize = "16px";
+        div.style.lineHeight = "24px";
+        div.style.maxWidth = "280px";
+        div.style.padding = "14px 16px";
+    }
 
     div.innerHTML = `
         <b>Legend</b><br><br>
