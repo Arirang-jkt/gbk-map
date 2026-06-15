@@ -112,6 +112,13 @@ var mrtIcon = new L.Icon({
     iconAnchor: [15, 50]
 });
 
+var kaiIcon = new L.Icon({
+    iconUrl: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png",
+    shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+    iconSize: [30, 50],
+    iconAnchor: [15, 50]
+});
+
 var tjIcon = new L.Icon({
     iconUrl: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png",
     shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
@@ -258,6 +265,20 @@ L.marker([-6.204112909862367, 106.82319513658356], {icon: tjIcon})
 <b>Bus routes:</b>4,6,B25
 `);
 
+L.marker([-6.176298429855123, 106.83064373842925], {icon: krlIcon})
+.addTo(map)
+.bindPopup(`
+<b>KRL/Stasiun Gambir</b><br>
+🔁 Integrated with KAI Intercity Rail (Economy)
+`);
+
+L.marker([-6.1879046683382795, 106.82304363842934], {icon: tjIcon})
+.addTo(map)
+.bindPopup(`
+<b>TJ MH Thamrin</b><br><br>
+<b>Bus routes:</b>1,6A,6B,9D
+`);
+
 L.marker([-6.213675346102233, 106.80840999425402], {icon: tjIcon})
 .addTo(map)
 .bindPopup(`
@@ -285,6 +306,13 @@ L.marker([-6.237132075167476,106.78249040779218], {icon: krlIcon})
 L.marker([-6.202193908958271,106.82374563662702], {icon: krlIcon})
 .addTo(map)
 .bindPopup("<b>KRL Sudirman (Dukuh Atas)</b>");
+
+L.marker([-6.174518661698714, 106.84438218075904], {icon: kaiIcon})
+.addTo(map)
+.bindPopup(`
+<b>KRL/Stasiun Pasar Senen</b><br>
+🔁 Integrated with KAI Intercity Rail (Economy)
+`);
 
 L.marker([-6.202111,106.820972], {icon: airportIcon})
 .addTo(map)
