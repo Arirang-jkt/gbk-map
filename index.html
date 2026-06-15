@@ -7,6 +7,9 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 
 <style>
+    .leaflet-control-geocoder {
+    z-index: 10000 !important;
+}
 #map {
     height: 100vh;
     width: 100%;
@@ -242,8 +245,8 @@ L.marker([-6.224167,106.805833], {icon: tjIcon})
 .bindPopup(`
 <b>TJ Senayan Bank Jakarta / Halte GBK</b><br><br>
 
-<b>Bus yang melintas:</b><br>
-1, 1F, 1W, 3F, 6M, 6V, 9C, 10H, S61, T31
+<b>Bus routes:</b><br>
+1,1F,1W,3F,6M,6V,9C,10H,S61,T31
 `);
 
 L.marker([-6.239216688079951, 106.78553072313282], {icon: tjIcon})
@@ -365,7 +368,7 @@ legend.onAdd = function () {
     div.innerHTML = `
         <b>Legend</b><br><br>
 
-        <div style="cursor:pointer;color:#424242;" id="leg-walk">- - Walking Route</div>
+        <div style="cursor:pointer;color:#424242;" id="leg-walk">- - Walking Route/Walking distance</div>
         <div style="cursor:pointer;color:purple;" id="leg-gbk"> 🏟️ GBK Stadium</div>
         <div style="cursor:pointer;color:#1e88e5;" id="leg-mrt">🚇MRT Line</div>
         <div style="cursor:pointer;color:green;" id="leg-krl">🚇KRL Station</div>
