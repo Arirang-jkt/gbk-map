@@ -255,7 +255,14 @@ L.marker([-6.204112909862367, 106.82319513658356], {icon: tjIcon})
 .addTo(map)
 .bindPopup(`
 <b>TJ Galunggung</b><br>
-Bus routes serving this stop:
+Bus routes:4,6,B25
+`);
+
+L.marker([-6.213675346102233, 106.80840999425402], {icon: tjIcon})
+.addTo(map)
+.bindPopup(`
+<b>TJ Gerbang Pemuda</b><br>
+Bus routes:1B,1F,1W,3F,7R,9,9A,10H,S61,T31
 `);
 
 L.marker([-6.239216688079951, 106.78553072313282], {icon: tjIcon})
@@ -263,7 +270,8 @@ L.marker([-6.239216688079951, 106.78553072313282], {icon: tjIcon})
 .bindPopup(`
 <b>TJ Velbak</b><br>
 Take L13E/13E bus toward Flyover Kuningan,<br>
-stop at TJ CSW (Integrated with MRT ASEAN)
+stop at TJ CSW (Integrated with MRT ASEAN),<br>
+Bus routes:13,13B,13E,L13E
 `);
 
 L.marker([-6.20740240702636, 106.7973176212431], {icon: krlIcon})
@@ -302,8 +310,16 @@ L.circle([-6.2039,106.8213], {
 // =====================
 // WALKING ROUTES
 // =====================
-L.polyline([[-6.2186,106.8022],[-6.2283,106.8031]],{
-    color:"#424242",weight:4,dashArray:"6,8",opacity:0.9
+L.polyline([
+    [-6.2186, 106.8022],   // GBK Stadium
+    [-6.2205, 106.8026],
+    [-6.2235, 106.8029],
+    [-6.226484620725534, 106.80245593658391] // MRT Senayan Mastercard
+], {
+    color: "#424242",
+    weight: 4,
+    dashArray: "6,8",
+    opacity: 0.9
 }).addTo(map);
 L.polyline([
     [-6.237132075167476, 106.78249040779218],
