@@ -418,6 +418,18 @@ L.polyline([
     opacity: 0.9
 }).addTo(map);
 
+// Velbak → KRL Kebayoran (walking dotted line)
+L.polyline([
+    [-6.239216688079951, 106.78553072313282], // TJ Velbak
+    [-6.2385, 106.7845],
+    [-6.2378, 106.7834],
+    [-6.237132075167476, 106.78249040779218]  // KRL Kebayoran
+], {
+    color: "#424242",
+    weight: 4,
+    dashArray: "6,8",
+    opacity: 0.9
+}).addTo(map);
 
 // GBK → Senayan Bank DKI
 L.polyline([
