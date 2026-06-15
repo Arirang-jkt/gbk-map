@@ -12,9 +12,6 @@
     width: 100%;
 }
 
-/* ===================== */
-/* MOBILE FIX            */
-/* ===================== */
 @media (max-width: 600px) {
     .leaflet-control {
         transform: scale(0.9);
@@ -24,18 +21,75 @@
 </head>
 
 <body>
+<div id="header" style="
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
 
+    background: white;
+    padding: 12px 16px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+
+    text-align: center;
+    font-family: Arial;
+
+    width: 420px;
+    max-width: 95%;
+">
+    <div style="font-weight: bold; font-size: 14px; color: #7c3aed;">
+        BTS WORLD TOUR 'ARIRANG' IN JAKARTA
+    </div>
+
+    <div style="font-size: 12px; color: #333; margin-top: 4px;">
+        Stadion Utama Gelora Bung Karno (GBK)
+    </div>
+
+    <div style="font-size: 12px; color: #666; margin-top: 2px;">
+        26–27 Desember 2026
+    </div>
+
+    <div style="font-size: 11px; color: #888; font-style: italic; margin-top: 6px;">
+        by rchivenj
+    </div>
+</div>
 <div id="map"></div>
 
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
+<link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 <script>
 
 // =====================
 // INIT MAP
 // =====================
 var map = L.map('map').setView([-6.2186, 106.8022], 13);
+var mrtLine = [
+    [-6.2933,106.7817],
+    [-6.2883,106.7944],
+    [-6.2694,106.7964],
+    [-6.2603,106.7950],
+    [-6.2511,106.7922],
+    [-6.2425,106.7958],
+    [-6.2331,106.7947],
+    [-6.2283,106.8031],
+    [-6.2228,106.8075],
+    [-6.2156,106.8178],
+    [-6.2086,106.8214],
+    [-6.2039,106.8213],
+    [-6.1933,106.8228]
+];
 
+L.polyline(mrtLine, {
+    color: "#1e88e5",
+    weight: 4,
+    opacity: 0.9
+}).addTo(map);
+L.Control.geocoder({
+    defaultMarkGeocode: true
+}).addTo(map);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19
 }).addTo(map);
@@ -72,27 +126,20 @@ var airportIcon = new L.Icon({
     iconAnchor: [15, 50]
 });
 
+var halimIcon = new L.Icon({
+    iconUrl: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-violet.png",
+    shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+    iconSize: [30, 50],
+    iconAnchor: [15, 50]
+});
+
 
 // =====================
-// GBK POPUP
+// GBK
 // =====================
 L.marker([-6.2186,106.8022])
 .addTo(map)
-.bindPopup(`
-<div style="text-align:center;font-family:Arial;">
-    <div style="font-size:16px;font-weight:bold;color:#7c3aed;">
-        GBK Main Stadium
-    </div>
-
-    <div style="margin-top:6px;font-size:13px;color:#a855f7;font-weight:600;">
-        BTS WORLD TOUR 'ARIRANG' IN JAKARTA
-    </div>
-
-    <div style="margin-top:6px;font-size:12px;color:#666;">
-        Gelora Bung Karno Stadium, Jakarta
-    </div>
-</div>
-`);
+.bindPopup("<b>GBK Main Stadium</b>");
 
 
 // =====================
@@ -117,7 +164,7 @@ const mrtStations = [
 ["Haji Nawi",-6.2603,106.7950],
 ["Blok A",-6.2511,106.7922],
 ["Blok M",-6.2425,106.7958],
-["CSW",-6.2331,106.7947],
+["ASEAN",-6.2331,106.7947],
 ["Senayan",-6.2283,106.8031],
 ["Istora Mandiri",-6.2228,106.8075],
 ["Bendungan Hilir",-6.2156,106.8178],
@@ -134,15 +181,15 @@ mrtStations.forEach(s => {
 
     let popup = "<b>MRT " + name + "</b>";
 
-    if (name === "Istora Mandiri") {
-        popup += "<br>🚶 ±10–12 min ke GBK";
+    if (name === "ASEAN") {
+        popup += "<br>🔁 Transit Hub ke TJ CSW";
     }
 
-    if (name === "Senayan") {
-        popup += "<br>🚶 ±10–13 min ke GBK";
+    if (name === "Bundaran HI") {
+        popup += "<br>🔁 Integrated with TJ Bundaran HI";
     }
 
-    L.marker([lat, lng], {icon: mrtIcon, riseOnHover: true})
+    L.marker([lat, lng], {icon: mrtIcon})
     .addTo(map)
     .bindPopup(popup);
 
@@ -158,35 +205,16 @@ mrtStations.forEach(s => {
 
 
 // =====================
-// MRT LINE
-// =====================
-L.polyline([
-    [-6.2933,106.7817],
-    [-6.2883,106.7944],
-    [-6.2694,106.7964],
-    [-6.2603,106.7950],
-    [-6.2511,106.7922],
-    [-6.2425,106.7958],
-    [-6.2331,106.7947],
-    [-6.2283,106.8031],
-    [-6.2228,106.8075],
-    [-6.2156,106.8178],
-    [-6.2086,106.8214],
-    [-6.2039,106.8213],
-    [-6.1933,106.8228]
-], {
-    color: "#1e88e5",
-    weight: 4,
-    opacity: 0.9
-}).addTo(map);
-
-
-// =====================
 // TRANSPORT MARKERS
 // =====================
 L.marker([-6.2245,106.8030], {icon: tjIcon})
 .addTo(map)
-.bindPopup("<b>TJ Halte GBK</b><br>🚶 ±4–5 min");
+.bindPopup(`
+<b>TJ Senayan Jakarta / Halte GBK</b><br><br>
+
+<b>Bus yang melintas:</b><br>
+1, 1F, 1W, 3F, 6M, 6V, 9C, 10H, S61, T31
+`);
 
 L.marker([-6.2076,106.7974], {icon: krlIcon})
 .addTo(map)
@@ -198,7 +226,11 @@ L.marker([-6.1983,106.8213], {icon: krlIcon})
 
 L.marker([-6.1989,106.8222], {icon: airportIcon})
 .addTo(map)
-.bindPopup("<b>BNI City Airport Rail Link</b>");
+.bindPopup("<b>BNI City Airport Rail Link (Soekarno–Hatta)</b>");
+
+L.marker([-6.1990,106.8225], {icon: halimIcon})
+.addTo(map)
+.bindPopup("<b>Halim Airport Option</b><br>via LRT Dukuh Atas");
 
 
 // =====================
@@ -230,7 +262,7 @@ L.polyline([[-6.2186,106.8022],[-6.2245,106.8030]],{
 
 
 // =====================
-// LEGEND (MOBILE FIXED + CLICKABLE)
+// LEGEND (CLICKABLE SAFE)
 // =====================
 var legend = L.control({position: "topright"});
 
@@ -244,8 +276,7 @@ legend.onAdd = function () {
     div.style.boxShadow = "0 2px 10px rgba(0,0,0,0.2)";
     div.style.fontSize = "11px";
     div.style.lineHeight = "18px";
-    div.style.maxWidth = "160px";
-    div.style.zIndex = "1000";
+    div.style.maxWidth = "220px";
 
     div.innerHTML = `
         <b>Legend</b><br><br>
@@ -255,7 +286,9 @@ legend.onAdd = function () {
         <div style="cursor:pointer;color:red;" id="leg-gbk">● GBK Stadium</div>
         <div style="cursor:pointer;color:green;" id="leg-krl">● KRL Station</div>
         <div style="cursor:pointer;color:purple;" id="leg-hub">● Dukuh Atas Hub</div>
-        <div style="cursor:pointer;color:#ffb300;" id="leg-airport">✈ Airport (BNI City)</div>
+        <div style="cursor:pointer;color:#ffb300;" id="leg-airport">✈ Soekarno–Hatta Airport</div>
+        <div style="cursor:pointer;color:#8e24aa;" id="leg-halim">✈ Halim Airport (Option)</div>
+        <div style="cursor:pointer;color:#d32f2f;" id="leg-tj">🚌 TJ Halte GBK</div>
     `;
 
     return div;
@@ -265,7 +298,7 @@ legend.addTo(map);
 
 
 // =====================
-// LEGEND CLICK ACTION
+// CLICK LEGEND (SAFE)
 // =====================
 document.addEventListener("click", function(e){
 
@@ -275,6 +308,8 @@ document.addEventListener("click", function(e){
     if (e.target.id === "leg-krl") map.flyTo([-6.1983,106.8213], 16);
     if (e.target.id === "leg-hub") map.flyTo([-6.2039,106.8213], 16);
     if (e.target.id === "leg-airport") map.flyTo([-6.1989,106.8222], 16);
+    if (e.target.id === "leg-halim") map.flyTo([-6.1990,106.8225], 16);
+    if (e.target.id === "leg-tj") map.flyTo([-6.2245,106.8030], 16);
 
 });
 
