@@ -33,7 +33,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 
 // =====================
-// ICONS (CLEAR & BIGGER)
+// ICONS
 // =====================
 var mrtIcon = new L.Icon({
     iconUrl: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png",
@@ -66,7 +66,7 @@ L.marker([-6.2186,106.8022])
 
 
 // =====================
-// GBK AREA (CLEAR CIRCLE)
+// GBK AREA
 // =====================
 L.circle([-6.2186,106.8022], {
     radius: 1200,
@@ -116,7 +116,6 @@ mrtStations.forEach(s => {
     .addTo(map)
     .bindPopup(popup);
 
-    // VISUAL CIRCLE (FIX BIAR KELIHATAN)
     L.circle([lat, lng], {
         radius: 1200,
         color: "#1e88e5",
@@ -161,8 +160,47 @@ L.circle([-6.2039,106.8213], {
     weight: 3,
     fillColor: "#800080",
     fillOpacity: 0.15
-}).addTo(map)
-.bindPopup("<b>Dukuh Atas Hub</b><br>MRT + KRL + Airport + TJ");
+}).addTo(map);
+
+
+// =====================
+// WALKING ROUTES FROM GBK
+// =====================
+
+// GBK → MRT Senayan
+L.polyline([
+    [-6.2186, 106.8022],
+    [-6.2283, 106.8031]
+], {
+    color: "#424242",
+    weight: 4,
+    dashArray: "6, 8",
+    opacity: 0.9
+}).addTo(map).bindPopup("Walking: GBK → MRT Senayan");
+
+
+// GBK → MRT Istora Mandiri
+L.polyline([
+    [-6.2186, 106.8022],
+    [-6.2228, 106.8075]
+], {
+    color: "#424242",
+    weight: 4,
+    dashArray: "6, 8",
+    opacity: 0.9
+}).addTo(map).bindPopup("Walking: GBK → MRT Istora");
+
+
+// GBK → TJ Halte GBK
+L.polyline([
+    [-6.2186, 106.8022],
+    [-6.2245, 106.8030]
+], {
+    color: "#c62828",
+    weight: 4,
+    dashArray: "6, 8",
+    opacity: 0.9
+}).addTo(map).bindPopup("Walking: GBK → TransJakarta GBK");
 
 </script>
 
