@@ -14,6 +14,9 @@
     height: 100vh;
     width: 100%;
 }
+.leaflet-control-geocoder {
+    z-index: 2000 !important;
+}
 
 @media (max-width: 600px) {
     .leaflet-control {
@@ -377,6 +380,7 @@ legend.onAdd = function () {
         <div style="cursor:pointer;color:#e65100;" id="leg-hub"> ⇄ Dukuh Atas Hub</div>
         <div style="cursor:pointer;color:#ffb300;" id="leg-airport">✈ Soekarno–Hatta Int. Airport (GCK)</div>
         <div style="cursor:pointer;color:#ffb300;" id="leg-halim">✈ Halim Perdanakusuma Int. Airport (HLP)</div>
+        <div>◎ Circles show areas within 900m radius of MRT stations</div>
         
     `;
 
