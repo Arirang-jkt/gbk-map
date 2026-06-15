@@ -58,7 +58,7 @@ var krlIcon = new L.Icon({
 
 
 // =====================
-// GBK (BTS CONCERT STYLE POPUP ONLY)
+// GBK (BTS CONCERT POPUP)
 // =====================
 L.marker([-6.2186,106.8022])
 .addTo(map)
@@ -142,6 +142,30 @@ mrtStations.forEach(s => {
 
 
 // =====================
+// MRT LINE (BLUE)
+// =====================
+L.polyline([
+    [-6.2933,106.7817],
+    [-6.2883,106.7944],
+    [-6.2694,106.7964],
+    [-6.2603,106.7950],
+    [-6.2511,106.7922],
+    [-6.2425,106.7958],
+    [-6.2331,106.7947],
+    [-6.2283,106.8031],
+    [-6.2228,106.8075],
+    [-6.2156,106.8178],
+    [-6.2086,106.8214],
+    [-6.2039,106.8213],
+    [-6.1933,106.8228]
+], {
+    color: "#1e88e5",
+    weight: 4,
+    opacity: 0.9
+}).addTo(map).bindPopup("MRT Jakarta Line");
+
+
+// =====================
 // TRANSJAKARTA GBK
 // =====================
 L.marker([-6.2245,106.8030], {icon: tjIcon})
@@ -193,7 +217,7 @@ L.polyline([
 }).addTo(map).bindPopup("Walking: GBK → MRT Senayan");
 
 
-// GBK → MRT Istora Mandiri
+// GBK → MRT Istora
 L.polyline([
     [-6.2186, 106.8022],
     [-6.2228, 106.8075]
