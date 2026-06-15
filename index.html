@@ -29,7 +29,7 @@
     z-index: 9999;
 
     background: white;
-    padding: 12px 16px;
+    padding: 14px 18px;
     border-radius: 12px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.2);
 
@@ -38,6 +38,8 @@
 
     width: 420px;
     max-width: 95%;
+
+    font-size: 14px;
 ">
     <div style="font-weight: bold; font-size: 14px; color: #7c3aed;">
         BTS WORLD TOUR 'ARIRANG' IN JAKARTA
@@ -269,12 +271,16 @@ var legend = L.control({position: "topright"});
 legend.onAdd = function () {
 
     var div = L.DomUtil.create("div");
+    div.style.fontSize = window.innerWidth < 600 ? "15px" : "11px";
+div.style.lineHeight = window.innerWidth < 600 ? "22px" : "18px";
+div.style.padding = window.innerWidth < 600 ? "14px 16px" : "10px 12px";
+div.style.maxWidth = "260px";
 
     div.style.background = "white";
     div.style.padding = "10px 12px";
     div.style.borderRadius = "10px";
     div.style.boxShadow = "0 2px 10px rgba(0,0,0,0.2)";
-    div.style.fontSize = "11px";
+    div.style.fontSize = "13px";
     div.style.lineHeight = "18px";
     div.style.maxWidth = "220px";
 
