@@ -249,10 +249,10 @@ mrtStations.forEach(s => {
 // =====================
 // TRANSPORT MARKERS
 // =====================
-L.marker([-6.224167,106.805833], {icon: tjIcon})
+L.marker([-6.224027947473438, 106.80577053629834], {icon: tjIcon})
 .addTo(map)
 .bindPopup(`
-<b>TJ Senayan Bank Jakarta / Halte GBK</b><br><br>
+<b>TJ Senayan Bank DKI / Halte GBK</b><br><br>
 
 <b>Bus routes:</b><br>
 1,1F,1W,3F,6M,6V,9C,10H,S61,T31
@@ -336,45 +336,55 @@ L.circle([-6.2039,106.8213], {
 
 
 // =====================
-// WALKING ROUTES
+// WALKING ROUTES (CLEAN RESET)
 // =====================
+
+// GBK → MRT Senayan Bank DKI
 L.polyline([
     [-6.2186, 106.8022],   // GBK Stadium
     [-6.2205, 106.8026],
     [-6.2235, 106.8029],
-    [-6.226484620725534, 106.80245593658391] // MRT Senayan Mastercard
+    [-6.226484620725534, 106.80245593658391] // Senayan Bank DKI
+], {
+    color: "#555555",
+    weight: 4,
+    dashArray: "6,8",
+    opacity: 0.9
+}).addTo(map);
+
+
+// GBK → MRT Istora Mandiri (follow road-ish path)
+L.polyline([
+    [-6.2186, 106.8022],        // GBK Stadium
+    [-6.2189, 106.8035],        // keluar area GBK
+    [-6.2196, 106.8050],        // Plaza Timur / jalur pedestrian
+    [-6.2208, 106.8065],        // mendekat ke jalur Istora
+    [-6.222163979583386, 106.80854577896014] // Istora Mandiri
 ], {
     color: "#424242",
     weight: 4,
     dashArray: "6,8",
     opacity: 0.9
 }).addTo(map);
+
+// MRT Istora Mandiri → TJ Senayan Bank DKI (walking)
 L.polyline([
-    [-6.237132075167476, 106.78249040779218],
-    [-6.239216688079951, 106.78553072313282]
-],{
-    color:"#424242",
-    weight:4,
-    dashArray:"6,8",
-    opacity:0.9
+    [-6.222163979583386, 106.80854577896014], // Istora
+    [-6.2230, 106.8075],                      // bend point (ikuti jalur jalan)
+    [-6.22401728187769, 106.80583490931033]   // Senayan Bank DKI
+], {
+    color: "#424242",
+    weight: 4,
+    dashArray: "6,8",
+    opacity: 0.9
 }).addTo(map);
 
+// TJ Galunggung → LRT Dukuh Atas
 L.polyline([
-    [-6.204112909862367, 106.82319513658356], // TJ Galunggung
+    [-6.204112909862367, 106.82319513658356],
     [-6.2042, 106.8239],
     [-6.2044, 106.8248],
-    [-6.204954476273413, 106.8264021347808]  // LRT Dukuh Atas
-], {
-    color: "#424242",
-    weight: 4,
-    dashArray: "6,8",
-    opacity: 0.9
-}).addTo(map);
-L.polyline([
-    [-6.204112909862367, 106.82319513658356], // TJ Galunggung
-    [-6.2035, 106.8232],
-    [-6.2028, 106.8236],
-    [-6.202193908958271, 106.82374563662702]  // KRL Sudirman
+    [-6.204954476273413, 106.8264021347808]
 ], {
     color: "#424242",
     weight: 4,
@@ -382,35 +392,56 @@ L.polyline([
     opacity: 0.9
 }).addTo(map);
 
-L.polyline([[-6.2186,106.8022],[-6.2228,106.8075]],{
-    color:"#424242",weight:4,dashArray:"6,8",opacity:0.9
-}).addTo(map);
+
+// TJ Galunggung → KRL Sudirman
 L.polyline([
-    [-6.202111, 106.820972],
-    [-6.200573206371267, 106.82280682313252]
-],{
-    color:"#424242",
-    weight:4,
-    dashArray:"6,8",
-    opacity:0.9
+    [-6.204112909862367, 106.82319513658356],
+    [-6.2035, 106.8232],
+    [-6.2028, 106.8236],
+    [-6.202193908958271, 106.82374563662702]
+], {
+    color: "#424242",
+    weight: 4,
+    dashArray: "6,8",
+    opacity: 0.9
 }).addTo(map);
+
+
+// KRL Sudirman → BNI City
 L.polyline([
     [-6.202193908958271, 106.82374563662702],
     [-6.200573206371267, 106.82280682313252]
-],{
-    color:"#424242",
-    weight:4,
-    dashArray:"6,8",
-    opacity:0.9
+], {
+    color: "#424242",
+    weight: 4,
+    dashArray: "6,8",
+    opacity: 0.9
 }).addTo(map);
+
+
+// BNI City → Airport Rail Link node
 L.polyline([
-    [-6.2186,106.8022],
-    [-6.224167,106.805833]
-],{
-    color:"#424242",
-    weight:4,
-    dashArray:"6,8",
-    opacity:0.9
+    [-6.202111, 106.820972],
+    [-6.200573206371267, 106.82280682313252]
+], {
+    color: "#424242",
+    weight: 4,
+    dashArray: "6,8",
+    opacity: 0.9
+}).addTo(map);
+
+
+// GBK → Senayan Bank DKI
+L.polyline([
+    [-6.2186, 106.8022],   // GBK Stadium
+    [-6.2205, 106.8038],
+    [-6.2220, 106.8052],
+    [-6.22401728187769, 106.80583490931033] // Senayan Bank DKI
+], {
+    color: "#424242",
+    weight: 4,
+    dashArray: "6,8",
+    opacity: 0.9
 }).addTo(map);
 
 
