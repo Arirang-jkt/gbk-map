@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>GBK Transport Map</title>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+
+<style>
+#map {
+    height: 100vh;
+    width: 100%;
+}
+</style>
+</head>
+
+<body>
+
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script>
+
+// =====================
+// INIT MAP
+// =====================
+var map = L.map('map').setView([-6.2186, 106.8022], 13);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19
+}).addTo(map);
+
+
+// =====================
+// ICONS (CLEAR & BIGGER)
+// =====================
+var mrtIcon = new L.Icon({
+    iconUrl: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png",
+    shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+    iconSize: [30, 50],
+    iconAnchor: [15, 50]
+});
+
+var tjIcon = new L.Icon({
+    iconUrl: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png",
+    shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+    iconSize: [30, 50],
+    iconAnchor: [15, 50]
+});
+
+var krlIcon = new L.Icon({
+    iconUrl: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png",
+    shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+    iconSize: [30, 50],
+    iconAnchor: [15, 50]
+});
+
+
+// =====================
+// GBK
+// =====================
+L.marker([-6.2186,106.8022])
+.addTo(map)
+.bindPopup("<b>GBK Main Stadium</b>");
+
+
+// =====================
+// GBK AREA (CLEAR CIRCLE)
+// =====================
+L.circle([-6.2186,106.8022], {
+    radius: 1200,
+    color: "red",
+    weight: 3,
+    fillColor: "#ff0000",
+    fillOpacity: 0.15
+}).addTo(map);
+
+
+// =====================
+// MRT STATIONS
+// =====================
+const mrtStations = [
+["Lebak Bulus Grab",-6.2933,106.7817],
+["Fatmawati",-6.2883,106.7944],
+["Cipete Raya",-6.2694,106.7964],
+["Haji Nawi",-6.2603,106.7950],
+["Blok A",-6.2511,106.7922],
+["Blok M",-6.2425,106.7958],
+["CSW",-6.2331,106.7947],
+["Senayan",-6.2283,106.8031],
+["Istora Mandiri",-6.2228,106.8075],
+["Bendungan Hilir",-6.2156,106.8178],
+["Setiabudi",-6.2086,106.8214],
+["Dukuh Atas BNI",-6.2039,106.8213],
+["Bundaran HI",-6.1933,106.8228]
+];
+
+mrtStations.forEach(s => {
+
+    let name = s[0];
+    let lat = s[1];
+    let lng = s[2];
+
+    let popup = "<b>MRT " + name + "</b>";
+
+    if (name === "Istora Mandiri") {
+        popup += "<br>🚶 ±10–12 min ke GBK";
+    }
+
+    if (name === "Senayan") {
+        popup += "<br>🚶 ±10–13 min ke GBK";
+    }
+
+    L.marker([lat, lng], {icon: mrtIcon, riseOnHover: true})
+    .addTo(map)
+    .bindPopup(popup);
+
+    // VISUAL CIRCLE (FIX BIAR KELIHATAN)
+    L.circle([lat, lng], {
+        radius: 1200,
+        color: "#1e88e5",
+        weight: 2,
+        fillColor: "#1e88e5",
+        fillOpacity: 0.20
+    }).addTo(map);
+
+});
+
+
+// =====================
+// TRANSJAKARTA GBK
+// =====================
+L.marker([-6.2245,106.8030], {icon: tjIcon})
+.addTo(map)
+.bindPopup("<b>TJ Halte GBK</b><br>🚶 ±4–5 min");
+
+
+// =====================
+// KRL + AIRPORT
+// =====================
+L.marker([-6.2076,106.7974], {icon: krlIcon})
+.addTo(map)
+.bindPopup("<b>KRL Palmerah</b>");
+
+L.marker([-6.1983,106.8213], {icon: krlIcon})
+.addTo(map)
+.bindPopup("<b>KRL Sudirman (Dukuh Atas)</b>");
+
+L.marker([-6.1989,106.8222], {icon: krlIcon})
+.addTo(map)
+.bindPopup("<b>BNI City Airport Rail Link</b>");
+
+
+// =====================
+// DUKUH ATAS HUB
+// =====================
+L.circle([-6.2039,106.8213], {
+    radius: 1000,
+    color: "purple",
+    weight: 3,
+    fillColor: "#800080",
+    fillOpacity: 0.15
+}).addTo(map)
+.bindPopup("<b>Dukuh Atas Hub</b><br>MRT + KRL + Airport + TJ");
+
+</script>
+
+</body>
+</html>
