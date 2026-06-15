@@ -129,7 +129,7 @@ var airportIcon = new L.Icon({
 });
 
 var halimIcon = new L.Icon({
-    iconUrl: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-violet.png",
+    iconUrl: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-yellow.png",
     shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
     iconSize: [30, 50],
     iconAnchor: [15, 50]
@@ -139,7 +139,14 @@ var halimIcon = new L.Icon({
 // =====================
 // GBK
 // =====================
-L.marker([-6.2186,106.8022])
+L.marker([-6.2186,106.8022], {
+    icon: new L.Icon({
+        iconUrl: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-violet.png",
+        shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+        iconSize: [30, 50],
+        iconAnchor: [15, 50]
+    })
+})
 .addTo(map)
 .bindPopup(`
 <div style="text-align:center;font-family:Arial;">
@@ -169,9 +176,9 @@ L.marker([-6.2186,106.8022])
 // =====================
 L.circle([-6.2186,106.8022], {
     radius: 1200,
-    color: "red",
+    color: "purple",
     weight: 3,
-    fillColor: "#ff0000",
+    fillColor: "#800080",
     fillOpacity: 0.15
 }).addTo(map);
 
@@ -190,8 +197,8 @@ const mrtStations = [
 ["Senayan",-6.2283,106.8031],
 ["Istora Mandiri",-6.2228,106.8075],
 ["Bendungan Hilir",-6.2156,106.8178],
-["Setiabudi",-6.2086,106.8214],
-["Dukuh Atas BNI",-6.2039,106.8213],
+["Setiabudi",-6.208565148432806,106.82145237895665],
+["Dukuh Atas BNI",-6.200573206371267,106.82280682313252],
 ["Bundaran HI",-6.1933,106.8228]
 ];
 
@@ -204,8 +211,9 @@ mrtStations.forEach(s => {
     let popup = "<b>MRT " + name + "</b>";
 
     if (name === "ASEAN") {
-        popup += "<br>🔁 Transit Hub ke TJ CSW";
-    }
+    popup += "<br>🔁 Transit Hub to TJ CSW";
+    popup += "<br>🔁 Integrated with TJ CSW";
+}
 
     if (name === "Bundaran HI") {
         popup += "<br>🔁 Integrated with TJ Bundaran HI";
@@ -229,30 +237,42 @@ mrtStations.forEach(s => {
 // =====================
 // TRANSPORT MARKERS
 // =====================
-L.marker([-6.2245,106.8030], {icon: tjIcon})
+L.marker([-6.224167,106.805833], {icon: tjIcon})
 .addTo(map)
 .bindPopup(`
-<b>TJ Senayan Jakarta / Halte GBK</b><br><br>
+<b>TJ Senayan Bank Jakarta / Halte GBK</b><br><br>
 
 <b>Bus yang melintas:</b><br>
 1, 1F, 1W, 3F, 6M, 6V, 9C, 10H, S61, T31
+`);
+
+L.marker([-6.239216688079951, 106.78553072313282], {icon: tjIcon})
+.addTo(map)
+.bindPopup(`
+<b>TJ Velbak</b><br>
+Take L13E/13E bus toward Flyover Kuningan,<br>
+stop at TJ CSW (Integrated with MRT ASEAN)
 `);
 
 L.marker([-6.2076,106.7974], {icon: krlIcon})
 .addTo(map)
 .bindPopup("<b>KRL Palmerah</b>");
 
-L.marker([-6.1983,106.8213], {icon: krlIcon})
+L.marker([-6.237132075167476,106.78249040779218], {icon: krlIcon})
+.addTo(map)
+.bindPopup("<b>KRL Kebayoran</b><br>Integrated with TJ Velbak (via skywalk)");
+
+L.marker([-6.202193908958271,106.82374563662702], {icon: krlIcon})
 .addTo(map)
 .bindPopup("<b>KRL Sudirman (Dukuh Atas)</b>");
 
-L.marker([-6.1989,106.8222], {icon: airportIcon})
+L.marker([-6.202111,106.820972], {icon: airportIcon})
 .addTo(map)
 .bindPopup("<b>BNI City Airport Rail Link (Soekarno–Hatta)</b>");
 
-L.marker([-6.1990,106.8225], {icon: halimIcon})
+L.marker([-6.204954476273413,106.8264021347808], {icon: halimIcon})
 .addTo(map)
-.bindPopup("<b>Halim Airport Option</b><br>via LRT Dukuh Atas");
+.bindPopup("<b>LRT Dukuh Atas</b><br>Halim Airport Option");
 
 
 // =====================
@@ -260,10 +280,10 @@ L.marker([-6.1990,106.8225], {icon: halimIcon})
 // =====================
 L.circle([-6.2039,106.8213], {
     radius: 1000,
-    color: "purple",
+    color: "#e65100",
     weight: 3,
-    fillColor: "#800080",
-    fillOpacity: 0.15
+    fillColor: "#ff6d00",
+    fillOpacity: 0.2
 }).addTo(map);
 
 
@@ -273,13 +293,45 @@ L.circle([-6.2039,106.8213], {
 L.polyline([[-6.2186,106.8022],[-6.2283,106.8031]],{
     color:"#424242",weight:4,dashArray:"6,8",opacity:0.9
 }).addTo(map);
+L.polyline([
+    [-6.237132075167476, 106.78249040779218],
+    [-6.239216688079951, 106.78553072313282]
+],{
+    color:"#424242",
+    weight:4,
+    dashArray:"6,8",
+    opacity:0.9
+}).addTo(map);
 
 L.polyline([[-6.2186,106.8022],[-6.2228,106.8075]],{
     color:"#424242",weight:4,dashArray:"6,8",opacity:0.9
 }).addTo(map);
-
-L.polyline([[-6.2186,106.8022],[-6.2245,106.8030]],{
-    color:"#c62828",weight:4,dashArray:"6,8",opacity:0.9
+L.polyline([
+    [-6.202111, 106.820972],
+    [-6.200573206371267, 106.82280682313252]
+],{
+    color:"#424242",
+    weight:4,
+    dashArray:"6,8",
+    opacity:0.9
+}).addTo(map);
+L.polyline([
+    [-6.202193908958271, 106.82374563662702],
+    [-6.200573206371267, 106.82280682313252]
+],{
+    color:"#424242",
+    weight:4,
+    dashArray:"6,8",
+    opacity:0.9
+}).addTo(map);
+L.polyline([
+    [-6.2186,106.8022],
+    [-6.224167,106.805833]
+],{
+    color:"#c62828",
+    weight:4,
+    dashArray:"6,8",
+    opacity:0.9
 }).addTo(map);
 
 
@@ -317,9 +369,9 @@ legend.onAdd = function () {
         <div style="cursor:pointer;color:#424242;" id="leg-walk">- - Walking Route</div>
         <div style="cursor:pointer;color:red;" id="leg-gbk">● GBK Stadium</div>
         <div style="cursor:pointer;color:green;" id="leg-krl">● KRL Station</div>
-        <div style="cursor:pointer;color:purple;" id="leg-hub">● Dukuh Atas Hub</div>
-        <div style="cursor:pointer;color:#ffb300;" id="leg-airport">✈ Soekarno–Hatta Airport</div>
-        <div style="cursor:pointer;color:#8e24aa;" id="leg-halim">✈ Halim Airport (Option)</div>
+        <div style="cursor:pointer;color:#e65100;" id="leg-hub">● Dukuh Atas Hub</div>
+        <div style="cursor:pointer;color:#ffb300;" id="leg-airport">✈ Soekarno–Hatta Int. Airport (GCK)</div>
+        <div style="cursor:pointer;color:#ffb300;" id="leg-halim">✈ Halim Perdanakusuma Int. Airport (HLP)</div>
         <div style="cursor:pointer;color:#d32f2f;" id="leg-tj">🚌 TJ Halte GBK</div>
     `;
 
