@@ -501,7 +501,7 @@ L.marker([-6.22138534953464, 106.83226145192431], {icon: tjIcon})
 L.marker([-6.228395352659086, 106.83302780774876], {icon: tjIcon})
 .addTo(map)
 .bindPopup(`
-<b>TJ Halte Kuningan</b><br>
+<b>TJ Kuningan</b><br>
 
 🔁 Integrated with LRT Kuningan<br><br>
 
@@ -583,12 +583,78 @@ L.marker([-6.174518661698714, 106.84438218075904], {icon: kaiIcon})
 
 L.marker([-6.202111,106.820972], {icon: airportIcon})
 .addTo(map)
-.bindPopup("<b>BNI City Airport Rail Link (Soekarno–Hatta)</b>");
+.bindPopup(`
+<b>BNI City Airport Rail Link (Soekarno–Hatta)</b><br>
+Take Airport Rail Link from Soekarno–Hatta to BNI City Station
+`);
 
 var lrtMarker = L.marker([-6.204954476273413,106.8264021347808], {icon: halimIcon})
 .addTo(map)
 .bindPopup("<b>LRT Dukuh Atas</b><br>Direct from Halim Int. Airport<br>Halim Int Airport is integrated with Woosh Station");
 
+L.marker([-6.245661725520958, 106.87126098075977], {icon: halimIcon})
+.addTo(map)
+.bindPopup(`
+<b>LRT Cawang</b>
+`);
+
+L.marker([-6.245661725520958, 106.87126098075977], {icon: halimIcon})
+.addTo(map)
+.bindPopup(`<b>LRT Cawang</b>`);
+
+L.marker([-6.243173363653525, 106.86382707891374], {icon: halimIcon})
+.addTo(map)
+.bindPopup(`<b>LRT Ciliwung</b>`);
+
+L.marker([-6.243218035131512, 106.85704598650543], {icon: halimIcon})
+.addTo(map)
+.bindPopup(`<b>LRT Cikoko</b>`);
+
+L.marker([-6.241769258629759, 106.83812495192464], {icon: halimIcon})
+.addTo(map)
+.bindPopup(`<b>LRT Pancoran</b>`);
+
+L.marker([-6.243173363653525, 106.86382707891374], {icon: halimIcon})
+.addTo(map)
+.bindPopup(`
+<b>LRT Ciliwung</b>
+`);
+
+L.marker([-6.245803558900135, 106.88422748769922], {icon: airportIcon})
+.addTo(map)
+.bindPopup(`
+<b>Halim Perdanakusuma International Airport (HLP)</b><br>
+🔁 Integrated with Whoosh Station<br>
+🔁 Integrated with LRT Halim
+`);
+
+L.marker([-6.223463, 106.806223], {
+    icon: L.divIcon({
+        className: '',
+        html: '<span style="color:#1b5e20;font-weight:bold;font-size:11px;white-space:nowrap;font-style:normal;">GATE 6</span>'
+    })
+}).addTo(map);
+
+L.marker([-6.222250, 106.802526], {
+    icon: L.divIcon({
+        className: '',
+        html: '<span style="color:#1b5e20;font-weight:bold;font-size:11px;white-space:nowrap;font-style:normal;">GATE 4</span>'
+    })
+}).addTo(map);
+
+L.marker([-6.223384, 106.803878], {
+    icon: L.divIcon({
+        className: '',
+        html: '<span style="color:#1b5e20;font-weight:bold;font-size:11px;white-space:nowrap;font-style:normal;">GATE 5</span>'
+    })
+}).addTo(map);
+
+L.marker([-6.214672, 106.808705], {
+    icon: L.divIcon({
+        className: '',
+        html: '<span style="color:#1b5e20;font-weight:bold;font-size:11px;white-space:nowrap;font-style:normal;">GATE 8</span>'
+    })
+}).addTo(map);
 
 // =====================
 // HUB
@@ -619,12 +685,11 @@ L.polyline([
 }).addTo(map);
 
 
-// GBK → TJ Gerbang Pemuda (walking)
 L.polyline([
-    [-6.2186, 106.8022],          // GBK Stadium
-    [-6.2178, 106.8040],
-    [-6.2168, 106.8060],
-    [-6.2153, 106.8074],
+    [-6.2186, 106.8022],   // GBK Stadium
+    [-6.2168, 106.8045],   // bend point
+    [-6.2155, 106.8065],   // approach Gate 8
+    [-6.214672, 106.808705], // GATE 8
     [-6.213675346102233, 106.80840999425402] // TJ Gerbang Pemuda
 ], {
     color: "#424242",
@@ -734,6 +799,49 @@ L.polyline([
     opacity: 0.9
 }).addTo(map);
 
+L.polyline([
+    [-6.245661725520958, 106.87126098075977], // LRT Cawang
+    [-6.2446, 106.8685], // bend point (halus)
+    [-6.243173363653525, 106.86382707891374], // LRT Ciliwung
+
+    [-6.2430, 106.8605], // bend point (halus)
+    [-6.243218035131512, 106.85704598650543], // LRT Cikoko
+
+    [-6.2426, 106.8460], // bend point menuju Pancoran
+    [-6.241769258629759, 106.83812495192464]  // LRT Pancoran
+], {
+    color: "#616161",
+    weight: 3,
+    opacity: 0.9,
+    lineCap: "round",
+    lineJoin: "round",
+    smoothFactor: 2
+}).addTo(map);
+
+L.polyline([
+    [-6.241769258629759, 106.83812495192464], // LRT Pancoran
+    [-6.228395352659086, 106.83302780774876], // LRT Kuningan
+    [-6.22138534953464, 106.83226145192431]  // LRT Rasuna Said
+], {
+    color: "#616161",
+    weight: 3,
+    opacity: 0.9,
+    lineCap: "round",
+    lineJoin: "round",
+    smoothFactor: 2
+}).addTo(map);
+
+L.polyline([
+    [-6.245661725520958, 106.87126098075977], // LRT Cawang
+    [-6.245803558900135, 106.88422748769922]  // LRT Halim
+], {
+    color: "#616161",
+    weight: 3,
+    opacity: 0.9,
+    lineCap: "round",
+    lineJoin: "round",
+    smoothFactor: 2
+}).addTo(map);
 
 // =====================
 // LEGEND (CLICKABLE SAFE)
@@ -771,9 +879,11 @@ legend.onAdd = function () {
         <div style="cursor:pointer;color:green;" id="leg-krl"> ◉ KRL Station 🚇</div>
         <div style="cursor:pointer;color:#d32f2f;" id="leg-tj"> ◉ Transjakarta (TJ) Bus Line 🚌</div>
         <div style="cursor:pointer;color:#grey;" id="leg-lrt"> ◉ LRT (Light Rail Transit) 🚈 </div>
+        <div style="cursor:pointer;color:#616161;" id="leg-woosh"> ◉ Whoosh High-Speed Rail 🚄 </div>
         <div style="cursor:pointer;color:#e65100;" id="leg-hub"> ⇄ Dukuh Atas Transit Hub</div>
         <div style="cursor:pointer;color:#ffb300;" id="leg-airport">✈ Soekarno–Hatta Int. Airport (GCK)</div>
         <div style="cursor:pointer;color:#ffb300;" id="leg-halim">✈ Halim Perdanakusuma Int. Airport (HLP)</div>
+        
         <div>◎ Circles show areas within 900m radius of MRT stations</div>
         
     `;
@@ -794,8 +904,9 @@ document.addEventListener("click", function(e){
     if (e.target.id === "leg-gbk") map.flyTo([-6.2186,106.8022], 16);
     if (e.target.id === "leg-krl") map.flyTo([-6.1983,106.8213], 16);
     if (e.target.id === "leg-hub") map.flyTo([-6.2039,106.8213], 16);
+    if (e.target.id === "leg-woosh") map.flyTo([-6.245927690780315, 106.88430255192455], 15);
     if (e.target.id === "leg-airport") map.flyTo([-6.1989,106.8222], 16);
-if (e.target.id === "leg-halim") map.flyTo([-6.204954476273413,106.8264021347808], 17);
+if (e.target.id === "leg-halim") map.flyTo([-6.265103269077641, 106.8855206077491], 15);
     if (e.target.id === "leg-lrt") map.flyTo([-6.204954476273413,106.8264021347808], 17);
     if (e.target.id === "leg-tj") map.flyTo([-6.2245,106.8030], 16);
 
