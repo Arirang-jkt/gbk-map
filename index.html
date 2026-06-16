@@ -85,7 +85,7 @@
 // =====================
 // INIT MAP
 // =====================
-var map = L.map('map').setView([-6.2186, 106.8022], 13);
+var map = L.map('map').setView([-6.2186, 106.8022], 16);
 function route(from, to, color, weight = 2) {
     return L.Routing.control({
         waypoints: [L.latLng(from[0], from[1]), L.latLng(to[0], to[1])],
@@ -178,7 +178,11 @@ L.Routing.control({
     draggableWaypoints: false,
     routeWhileDragging: false,
     show: false,
-    createMarker: () => null
+    createMarker: () => null,
+
+    // 🔥 INI YANG MEMBUNUH AUTO ZOOM
+    fitSelectedRoutes: false,
+    fitBounds: false
 }).addTo(map);
 
 L.polyline([
@@ -218,6 +222,20 @@ L.polyline([
     color: "#616161",   // abu lebih gelap
     weight: 2,
     opacity: 0.9
+}).addTo(map);
+
+L.polyline([
+    [-6.239216688079951, 106.78553072313282], // TJ Velbak
+    [-6.2380, 106.7890],
+    [-6.2372, 106.7925],
+    [-6.2365, 106.7958],
+    [-6.238479657159958, 106.79864088075963]  // MRT ASEAN
+], {
+    color: "#d32f2f",
+    weight: 2,
+    opacity: 0.85,
+    lineCap: "round",
+    lineJoin: "round"
 }).addTo(map);
 
 // =====================
