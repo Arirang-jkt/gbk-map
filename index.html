@@ -227,9 +227,12 @@ mrtStations.forEach(s => {
     popup += "<br>🔁 Integrated with TJ CSW";
 }
 
-    if (name === "Bundaran HI") {
-        popup += "<br>🔁 Integrated with TJ Bundaran HI";
-    }
+if (name === "Bundaran HI") {
+    popup += `
+        <br>🔁 Integrated with TJ Bundaran HI<br>
+        <br><b>Bus routes:</b> 1,6A,6B,9D
+    `;
+}
 
     L.marker([lat, lng], {icon: mrtIcon})
     .addTo(map)
@@ -268,8 +271,11 @@ L.marker([-6.204112909862367, 106.82319513658356], {icon: tjIcon})
 L.marker([-6.176298429855123, 106.83064373842925], {icon: krlIcon})
 .addTo(map)
 .bindPopup(`
-<b>KRL/Stasiun Gambir</b><br>
-🔁 Integrated with KAI Intercity Rail (Economy)
+<b>Gambir Stasion/KAI Intercity Rail (Economy)</b><br>
+⚠️ <span style="color:red;">not Integrated with KRL Station</span><br>
+Option:<br>
+• Self-transit to Gondangdia station (1.5km from Gambir)<br>
+• Online hailing (taxi/gojek/grab) to MRT Bundaran HI
 `);
 
 L.marker([-6.1879046683382795, 106.82304363842934], {icon: tjIcon})
@@ -311,7 +317,7 @@ L.marker([-6.174518661698714, 106.84438218075904], {icon: kaiIcon})
 .addTo(map)
 .bindPopup(`
 <b>KRL/Stasiun Pasar Senen</b><br>
-🔁 Integrated with KAI Intercity Rail (Economy)
+🔁 KRL Integrated with KAI Intercity Rail (Economy)
 `);
 
 L.marker([-6.202111,106.820972], {icon: airportIcon})
