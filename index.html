@@ -85,7 +85,7 @@
 // =====================
 // INIT MAP
 // =====================
-var map = L.map('map').setView([-6.2186, 106.8022], 16);
+var map = L.map('map').setView([-6.2186, 106.8022], 14);
 function route(from, to, color, weight = 2) {
     return L.Routing.control({
         waypoints: [L.latLng(from[0], from[1]), L.latLng(to[0], to[1])],
