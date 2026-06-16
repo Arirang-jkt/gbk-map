@@ -3,9 +3,20 @@
 <head>
 <meta charset="utf-8">
 <title>GBK Transport Map</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"/>
+
+<!-- ADD INI (Routing Machine CSS) -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+
+<!-- ADD INI (Routing Machine JS) -->
+<script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-
+<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
 <style>
     .leaflet-control-geocoder {
     z-index: 10000 !important;
@@ -66,6 +77,7 @@
 <div id="map"></div>
 
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
 <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
 <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 <script>
@@ -74,31 +86,178 @@
 // INIT MAP
 // =====================
 var map = L.map('map').setView([-6.2186, 106.8022], 13);
+function route(from, to, color, weight = 2) {
+    return L.Routing.control({
+        waypoints: [L.latLng(from[0], from[1]), L.latLng(to[0], to[1])],
+        router: L.Routing.osrmv1({
+            serviceUrl: "https://router.project-osrm.org/route/v1"
+        }),
+        lineOptions: {
+            styles: [{ color: color, weight: weight, opacity: 0.9 }]
+        },
+        addWaypoints: false,
+        draggableWaypoints: false,
+        routeWhileDragging: false,
+        show: false,
+        createMarker: () => null
+    }).addTo(map);
+}
+
+L.polyline([
+    [-6.213675346102233, 106.80840999425402], // Gerbang Pemuda
+    [-6.2175, 106.8115], // midpoint koridor Semanggi
+    [-6.220896680626311, 106.81356145192437]  // Semanggi
+], {
+    color: "#d32f2f",
+    weight: 2,
+    opacity: 0.9
+}).addTo(map);
+
+L.polyline([
+    [-6.220896680626311, 106.81356145192437], // TJ Semanggi
+    [-6.2222, 106.8146], // koridor jalan utama
+    [-6.2240, 106.8157], // approach Widya Chandra
+    [-6.226272689533147, 106.81738926541907]  // TJ Widya Chandra Telkomsel
+], {
+    color: "#d32f2f",
+    weight: 2,
+    opacity: 0.9,
+    lineCap: "round",
+    lineJoin: "round"
+}).addTo(map);
+
+L.polyline([
+    [-6.226272689533147, 106.81738926541907], // Widya Chandra
+    [-6.2285, 106.8189], // koridor jalan utama
+    [-6.2307, 106.8203], // arah Denpasar Kuningan
+    [-6.232360819849813, 106.82166436726502]  // Denpasar
+], {
+    color: "#d32f2f",
+    weight: 2,
+    opacity: 0.9,
+    lineCap: "round",
+    lineJoin: "round"
+}).addTo(map);
+
+L.polyline([
+    [-6.232360819849813, 106.82166436726502], // Denpasar
+    [-6.2338, 106.8232], // koridor jalan utama Kuningan
+    [-6.2355, 106.8253], // approach simpang
+    [-6.237047221846573, 106.82809432493531]  // Simpang Kuningan
+], {
+    color: "#d32f2f",
+    weight: 2,
+    opacity: 0.9,
+    lineCap: "round",
+    lineJoin: "round"
+}).addTo(map);
+
+L.polyline([
+    [-6.236972564523857, 106.82797630774884],
+    [-6.236531, 106.827245],
+    [-6.236354, 106.827386]
+], {
+    color: "#d32f2f",
+    weight: 2,
+    opacity: 0.85,
+    smoothFactor: 2
+}).addTo(map);
+
+L.Routing.control({
+    waypoints: [
+        L.latLng(-6.236354, 106.827386),
+        L.latLng(-6.228395352659086, 106.83302780774876)
+    ],
+    router: L.Routing.osrmv1({
+        serviceUrl: "https://router.project-osrm.org/route/v1"
+    }),
+    lineOptions: {
+        styles: [{ color: "#d32f2f", weight: 2, opacity: 0.85 }]
+    },
+    addWaypoints: false,
+    draggableWaypoints: false,
+    routeWhileDragging: false,
+    show: false,
+    createMarker: () => null
+}).addTo(map);
+
+L.polyline([
+    [-6.228395352659086, 106.83302780774876], // TJ Halte Kuningan
+    [-6.224900, 106.833200], // titik lengkung (biar ga patah)
+    [-6.22138534953464, 106.83226145192431]  // TJ Rasuna Said
+], {
+    color: "#d32f2f",
+    weight: 2,
+    opacity: 0.85,
+    smoothFactor: 2
+}).addTo(map);
+
+L.polyline([
+    [-6.22138534953464, 106.83226145192431], // Rasuna Said
+
+    // 🔧 sedikit ke kiri aja (tipis banget shift)
+    [-6.216200, 106.831200],
+
+    // masih hampir lurus tapi ada lengkung halus
+    [-6.212200, 106.830600],
+
+    [-6.209101907644179, 106.83021749425389]  // Setiabudi
+], {
+    color: "#d32f2f",
+    weight: 2,
+    opacity: 0.85,
+    smoothFactor: 2
+}).addTo(map);
+
+L.polyline([
+    [-6.204954476273413, 106.8264021347808], // LRT Dukuh Atas
+    [-6.209101907644179, 106.83021749425389], // Setiabudi
+    [-6.22138534953464, 106.83226145192431],  // Rasuna Said
+    [-6.228395352659086, 106.83302780774876]  // LRT Kuningan
+], {
+    color: "#616161",   // abu lebih gelap
+    weight: 2,
+    opacity: 0.9
+}).addTo(map);
+
+// =====================
+// MRT LINE
+// =====================
 var mrtLine = [
-    [-6.289048179839533, 106.77503350959539], // Lebak Bulus
-    [-6.292247373876462, 106.79248145192514], // Fatmawati Indomaret
-    [-6.278019310387668, 106.79734345192497], // Cipete Raya TUKU
-    [-6.26638268128705, 106.79728977891399],  // Haji Nawi
-    [-6.255486669916231, 106.79718833843019], // Blok A
-    [-6.24423535973213, 106.79812145192456],  // Blok M BCA
-    [-6.238479657159958, 106.79864088075963], // ASEAN
-    [-6.226484620725534, 106.80245593658391], // Senayan
-    [-6.222115984230546, 106.80856723658378], // Istora Mandiri
-    [-6.214722683451333, 106.8178963500784],  // Bendungan Hilir
-    [-6.208565148432806, 106.82145237895665], // Setiabudi
-    [-6.200573206371267, 106.82280682313252], // Dukuh Atas BNI
-    [-6.191689301322337, 106.82301976726468]  // Bundaran HI
+    [-6.289048179839533, 106.77503350959539],
+    [-6.292247373876462, 106.79248145192514],
+    [-6.278019310387668, 106.79734345192497],
+    [-6.26638268128705, 106.79728977891399],
+    [-6.255486669916231, 106.79718833843019],
+    [-6.24423535973213, 106.79812145192456],
+    [-6.238479657159958, 106.79864088075963],
+    [-6.226484620725534, 106.80245593658391],
+    [-6.222115984230546, 106.80856723658378],
+    [-6.214722683451333, 106.8178963500784],
+    [-6.208565148432806, 106.82145237895665],
+    [-6.200573206371267, 106.82280682313252],
+    [-6.191689301322337, 106.82301976726468]
 ];
+
 L.polyline(mrtLine, {
     color: "#1e88e5",
     weight: 4,
     opacity: 0.9
 }).addTo(map);
-L.Control.geocoder({
-    defaultMarkGeocode: true
-}).addTo(map);
+
+// =====================
+// BASE TILE LAYER
+// =====================
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19
+}).addTo(map);
+
+
+// =====================
+// GEOCODER
+// =====================
+L.Control.geocoder({
+    defaultMarkGeocode: true
 }).addTo(map);
 
 
@@ -261,11 +420,95 @@ L.marker([-6.224027947473438, 106.80577053629834], {icon: tjIcon})
 1,1F,1W,3F,6M,6V,9C,10H,S61,T31
 `);
 
+L.marker([-6.216835984563283, 106.81524440774874], {icon: tjIcon})
+.addTo(map)
+.bindPopup(`
+<b>TJ Bendungan Hilir</b><br><br>
+
+<b>Bus routes:</b><br>
+1
+`);
+
 L.marker([-6.204112909862367, 106.82319513658356], {icon: tjIcon})
 .addTo(map)
 .bindPopup(`
 <b>TJ Galunggung</b><br><br>
 <b>Bus routes:</b>4,6,B25
+`);
+L.marker([-6.220896680626311, 106.81356145192437], {icon: tjIcon})
+.addTo(map)
+.bindPopup(`
+<b>TJ Semanggi</b><br><br>
+
+<b>Bus routes:</b><br>
+1W,6B,6M,7R,9,9A,9C,S61,T31
+`);
+L.marker([-6.226272689533147, 106.81738926541907], {icon: tjIcon})
+.addTo(map)
+.bindPopup(`
+<b>TJ Widya Chandra Telkomsel</b><br><br>
+
+<b>Bus routes:</b><br>
+6A,6B,6M,9,9A,9C
+`);
+
+L.marker([-6.237047221846573, 106.82809432493531], {icon: tjIcon})
+.addTo(map)
+.bindPopup(`
+<b>TJ Simpang Kuningan</b><br><br>
+
+<b>Bus routes:</b><br>
+7R,9,9A,9C,9D,13E,L13E
+`);
+L.marker([-6.23450602076364, 106.829084367265], {icon: tjIcon})
+.addTo(map)
+.bindPopup(`
+<b>TJ Underpass Kuningan</b><br><br>
+
+<b>Bus routes:</b><br>
+6,6A,6B,6H,6M,13E,L13E
+`);
+
+L.marker([-6.22138534953464, 106.83226145192431], {icon: tjIcon})
+.addTo(map)
+.bindPopup(`
+<b>TJ Rasuna Said</b><br>
+
+🔁 Integrated with LRT Rasuna Said<br><br>
+
+<b>Bus routes:</b><br>
+4D,6,6A,6B,6C,6H,6M,13E,L13E
+`);
+
+L.marker([-6.228395352659086, 106.83302780774876], {icon: tjIcon})
+.addTo(map)
+.bindPopup(`
+<b>TJ Halte Kuningan</b><br>
+
+🔁 Integrated with LRT Kuningan<br><br>
+
+<b>Bus routes:</b><br>
+4D,6,6A,6B,6C,6H,6K,6M,13E,L13E
+`);
+
+L.marker([-6.209101907644179, 106.83021749425389], {icon: tjIcon})
+.addTo(map)
+.bindPopup(`
+<b>TJ Setiabudi</b><br>
+
+🔁 Integrated with LRT Setiabudi<br><br>
+
+<b>Bus routes:</b><br>
+4D, 6, 6A, 6B, 6H, 6M, 13E, L13E
+`);
+
+L.marker([-6.232360819849813, 106.82166436726502], {icon: tjIcon})
+.addTo(map)
+.bindPopup(`
+<b>TJ Denpasar</b><br><br>
+
+<b>Bus routes:</b><br>
+6B,6M,9,9A,9C
 `);
 
 L.marker([-6.176298429855123, 106.83064373842925], {icon: krlIcon})
@@ -340,7 +583,6 @@ L.circle([-6.2039,106.8213], {
     fillOpacity: 0.2
 }).addTo(map);
 
-
 // =====================
 // WALKING ROUTES (CLEAN RESET)
 // =====================
@@ -359,7 +601,19 @@ L.polyline([
 }).addTo(map);
 
 
-
+// GBK → TJ Gerbang Pemuda (walking)
+L.polyline([
+    [-6.2186, 106.8022],          // GBK Stadium
+    [-6.2178, 106.8040],
+    [-6.2168, 106.8060],
+    [-6.2153, 106.8074],
+    [-6.213675346102233, 106.80840999425402] // TJ Gerbang Pemuda
+], {
+    color: "#424242",
+    weight: 4,
+    dashArray: "6,8",
+    opacity: 0.9
+}).addTo(map);
 
 // MRT Istora Mandiri → TJ Senayan Bank DKI (walking)
 L.polyline([
@@ -437,6 +691,18 @@ L.polyline([
     opacity: 0.9
 }).addTo(map);
 
+L.polyline([
+    [-6.216835984563283, 106.81524440774874], // TJ Bendungan Hilir
+    [-6.2182, 106.8146],
+    [-6.2194, 106.8141],
+    [-6.220896680626311, 106.81356145192437]  // TJ Semanggi
+], {
+    color: "#424242",
+    weight: 4,
+    dashArray: "6,8",
+    opacity: 0.9
+}).addTo(map);
+
 // GBK → Senayan Bank DKI
 L.polyline([
     [-6.2186, 106.8022],   // GBK Stadium
@@ -485,7 +751,7 @@ legend.onAdd = function () {
         <div style="cursor:pointer;color:purple;" id="leg-gbk"> 🏟️ GBK Stadium</div>
         <div style="cursor:pointer;color:#1e88e5;" id="leg-mrt">🚇MRT Line</div>
         <div style="cursor:pointer;color:green;" id="leg-krl">🚇KRL Station</div>
-        <div style="cursor:pointer;color:#d32f2f;" id="leg-tj">🚌 Transjakarta (TJ) Bus Stop</div>
+        <div style="cursor:pointer;color:#d32f2f;" id="leg-tj">🚌 Transjakarta (TJ) Bus Line</div>
         <div style="cursor:pointer;color:#grey;" id="leg-lrt">🚈 LRT (Light Rail Transit)</div>
         <div style="cursor:pointer;color:#e65100;" id="leg-hub"> ⇄ Dukuh Atas Transit Hub</div>
         <div style="cursor:pointer;color:#ffb300;" id="leg-airport">✈ Soekarno–Hatta Int. Airport (GCK)</div>
