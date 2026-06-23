@@ -29,12 +29,26 @@
     z-index: 2000 !important;
 }
 
+/* Sembunyikan HANYA panel instruksi routing */
 .leaflet-routing-container {
+    opacity: 0 !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    pointer-events: none !important;
+}
+
+/* Sembunyikan tombol collapse routing */
+.leaflet-routing-collapse-btn {
     display: none !important;
 }
 
-.leaflet-routing-alt {
-    display: none !important;
+/* Pastikan search box tetap di atas */
+.leaflet-control-geocoder {
+    z-index: 10000 !important;
 }
 
 @media (max-width: 600px) {
