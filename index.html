@@ -86,6 +86,8 @@
 // INIT MAP
 // =====================
 var map = L.map('map').setView([-6.2186, 106.8022], 14);
+var lockerLayer = L.layerGroup();
+
 function route(from, to, color, weight = 2) {
     return L.Routing.control({
         waypoints: [L.latLng(from[0], from[1]), L.latLng(to[0], to[1])],
@@ -165,6 +167,8 @@ L.polyline([
     opacity: 0.9
 }).addTo(map);
 
+
+
 L.polyline([
     [-6.220896680626311, 106.81356145192437], // TJ Semanggi
     [-6.2222, 106.8146], // koridor jalan utama
@@ -204,6 +208,32 @@ L.polyline([
     lineJoin: "round"
 }).addTo(map);
 
+L.Routing.control({
+    waypoints: [
+        L.latLng(-6.224027947473438, 106.80577053629834), // TJ Senayan Bank DKI
+        L.latLng(-6.213675346102233, 106.80840999425402)  // TJ Gerbang Pemuda
+    ],
+    router: L.Routing.osrmv1({
+        serviceUrl: "https://router.project-osrm.org/route/v1"
+    }),
+
+    lineOptions: {
+        styles: [{
+            color: "#d32f2f",
+            weight: 2,
+            opacity: 0.85
+        }]
+    },
+
+    addWaypoints: false,
+    draggableWaypoints: false,
+    routeWhileDragging: false,
+    show: false,
+    createMarker: () => null,
+
+    fitSelectedRoutes: false
+}).addTo(map);
+
 L.polyline([
     [-6.236972564523857, 106.82797630774884],
     [-6.236531, 106.827245],
@@ -235,6 +265,60 @@ L.Routing.control({
     // 🔥 INI YANG MEMBUNUH AUTO ZOOM
     fitSelectedRoutes: false,
     fitBounds: false
+}).addTo(map);
+
+L.Routing.control({
+    waypoints: [
+        L.latLng(-6.238358, 106.777642),                  // Kebayoran Lama
+        L.latLng(-6.238135412032269, 106.7712306221282), // Seskoal
+        L.latLng(-6.237873067411201, 106.76540192316467), // Cipulir
+        L.latLng(-6.2375445440179655, 106.76064949597733) // Swadarma (UPDATED)
+    ],
+
+    router: L.Routing.osrmv1({
+        serviceUrl: "https://router.project-osrm.org/route/v1"
+    }),
+
+    lineOptions: {
+        styles: [{
+            color: "#d32f2f",
+            weight: 2,
+            opacity: 0.85
+        }]
+    },
+
+    addWaypoints: false,
+    draggableWaypoints: false,
+    routeWhileDragging: false,
+    show: false,
+    createMarker: () => null,
+    fitSelectedRoutes: false
+}).addTo(map);
+
+L.Routing.control({
+    waypoints: [
+        L.latLng(-6.239544712042364, 106.78556037231932), // Velbak
+        L.latLng(-6.238423294857816, 106.77764672802498)  // Kebayoran Lama
+    ],
+
+    router: L.Routing.osrmv1({
+        serviceUrl: "https://router.project-osrm.org/route/v1"
+    }),
+
+    lineOptions: {
+        styles: [{
+            color: "#d32f2f",
+            weight: 2,
+            opacity: 0.85
+        }]
+    },
+
+    addWaypoints: false,
+    draggableWaypoints: false,
+    routeWhileDragging: false,
+    show: false,
+    createMarker: () => null,
+    fitSelectedRoutes: false
 }).addTo(map);
 
 L.polyline([
@@ -276,18 +360,30 @@ L.polyline([
     opacity: 0.9
 }).addTo(map);
 
-L.polyline([
-    [-6.239216688079951, 106.78553072313282], // TJ Velbak
-    [-6.2380, 106.7890],
-    [-6.2372, 106.7925],
-    [-6.2365, 106.7958],
-    [-6.238479657159958, 106.79864088075963]  // MRT ASEAN
-], {
-    color: "#d32f2f",
-    weight: 2,
-    opacity: 0.85,
-    lineCap: "round",
-    lineJoin: "round"
+L.Routing.control({
+    waypoints: [
+        L.latLng(-6.238479657159958, 106.79864088075963), // MRT ASEAN
+        L.latLng(-6.239544712042364, 106.78556037231932)  // TJ Velbak
+    ],
+
+    router: L.Routing.osrmv1({
+        serviceUrl: "https://router.project-osrm.org/route/v1"
+    }),
+
+    lineOptions: {
+        styles: [{
+            color: "#d32f2f",
+            weight: 2,
+            opacity: 0.85
+        }]
+    },
+
+    addWaypoints: false,
+    draggableWaypoints: false,
+    routeWhileDragging: false,
+    show: false,
+    createMarker: () => null,
+    fitSelectedRoutes: false
 }).addTo(map);
 
 // =====================
@@ -605,7 +701,7 @@ L.marker([-6.213675346102233, 106.80840999425402], {icon: tjIcon})
 <b>Bus routes:</b>1B,1F,1W,3F,7R,9,9A,10H,S61,T31
 `);
 
-L.marker([-6.239216688079951, 106.78553072313282], {icon: tjIcon})
+L.marker([-6.239544712042364, 106.78556037231932], {icon: tjIcon})
 .addTo(map)
 .bindPopup(`
 <b>TJ Velbak</b><br>
@@ -842,7 +938,7 @@ L.polyline([
 
 // Velbak → KRL Kebayoran (walking dotted line)
 L.polyline([
-    [-6.239216688079951, 106.78553072313282], // TJ Velbak
+    [-6.239544712042364, 106.785560372319321], // TJ Velbak
     [-6.2385, 106.7845],
     [-6.2378, 106.7834],
     [-6.237132075167476, 106.78249040779218]  // KRL Kebayoran
@@ -922,6 +1018,104 @@ L.polyline([
     smoothFactor: 2
 }).addTo(map);
 
+L.marker([-6.238423294857816, 106.77764672802498], {icon: tjIcon})
+.addTo(map)
+.bindPopup(`
+<b>TJ Kebayoran Lama</b><br><br>
+<b>Bus routes:</b><br>
+13, 13B, 13E
+`);
+
+L.marker([-6.237645373023323, 106.77122483741338], {icon: tjIcon})
+.addTo(map)
+.bindPopup(`
+<b>TJ Seskoal</b><br><br>
+<b>Bus routes:</b><br>
+13, 13B, 13E
+`);
+
+L.marker([-6.237811883264235, 106.76538675383108], {icon: tjIcon})
+.addTo(map)
+.bindPopup(`
+<b>TJ Cipulir</b><br><br>
+<b>Bus routes:</b><br>
+13, 13B, 13E
+`);
+
+L.marker([-6.2375445440179655, 106.76064949597733], {icon: tjIcon})
+.addTo(map)
+.bindPopup(`
+<b>TJ Swadarma ParagonCorp</b><br><br>
+<b>Bus routes:</b><br>
+13, 13B, 13E
+`);
+
+// =====================
+// LOCKER BOX ICON (NO PIN)
+// =====================
+var lockerIcon = L.divIcon({
+    className: "",
+    html: `
+        <div style="
+            width:22px;
+            height:22px;
+            background:#ffffff;
+            border:2px solid #333;
+            border-radius:4px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:12px;
+        ">
+            🔒
+        </div>
+    `,
+    iconSize: [22, 22],
+    iconAnchor: [11, 11]
+});
+
+
+// =====================
+// LOCKER LAYER (HIDDEN DEFAULT)
+// =====================
+var lockerLayer = L.layerGroup();
+
+[
+    ["MRT Bendungan Hilir", -6.214722683451333, 106.8178963500784],
+    ["MRT Setiabudi", -6.208565148432806, 106.82145237895665],
+    ["MRT Dukuh Atas", -6.200573206371267, 106.82280682313252],
+    ["MRT Istora Mandiri", -6.222115984230546, 106.80856723658378],
+    ["MRT Senayan", -6.226484620725534, 106.80245593658391],
+    ["MRT Bundaran HI", -6.191689301322337, 106.82301976726468],
+    ["MRT Blok M", -6.24423535973213, 106.79812145192456],
+    ["MRT Blok A", -6.255486669916231, 106.79718833843019],
+    ["MRT Lebak Bulus", -6.289048179839533, 106.77503350959539],
+
+    ["Elevated Parking B", -6.220483614785796, 106.80758583741326],
+    ["Aquatic Arena", -6.216632550186303, 106.80584349508447],
+    ["SHOWR", -6.221659152730582, 106.80453459508449],
+    ["Plaza Barat", -6.218608762108902, 106.80159139786008],
+    ["GBK Yellow Gate", -6.21708169725222, 106.80142332476201]
+].forEach(p => {
+    L.marker([p[1], p[2]], { icon: lockerIcon })
+        .bindPopup(p[0] + "<br>PAXEL Smart Locker Available")
+        .addTo(lockerLayer);
+});
+
+
+// =====================
+// TOGGLE FROM LEGEND
+// =====================
+document.addEventListener("click", function(e){
+    if (e.target.id === "leg-locker") {
+        if (map.hasLayer(lockerLayer)) {
+            map.removeLayer(lockerLayer);
+        } else {
+            map.addLayer(lockerLayer);
+        }
+    }
+});
+
 // =====================
 // LEGEND (CLICKABLE SAFE)
 // =====================
@@ -962,6 +1156,7 @@ legend.onAdd = function () {
         <div style="cursor:pointer;color:#e65100;" id="leg-hub"> ⇄ Dukuh Atas Transit Hub</div>
         <div style="cursor:pointer;color:#ffb300;" id="leg-airport">✈ Soekarno–Hatta Int. Airport (GCK)</div>
         <div style="cursor:pointer;color:#ffb300;" id="leg-halim">✈ Halim Perdanakusuma Int. Airport (HLP)</div>
+        <div id="leg-locker"> 🔒 Smart Locker/Penyimpanan Barang (rent)</div>
         
         <div>◎ Circles show areas within 900m radius of MRT stations</div>
         
